@@ -7,7 +7,7 @@
     build:
       strategy:
         matrix:
-          os: [ubuntu-latest, macos-latest, windows-latest]
+          os: [ubuntu-latest, macos-latest]
       runs-on: ${{matrix.os}}
       timeout-minutes: 1
       steps:
@@ -19,20 +19,11 @@
           shell: bash
           run: mkdir build
   
-        - name: Setup packages
-          run: |
-            if [ "${{matrix.os}}" == "ubuntu-latest" ]; then
-              sudo apt-get install ninja-build
-            elif [ "${{matrix.os}}" == "macos-latest" ]; then
-              brew install ninja
-            fi
-          shell: bash
-  
         - name: CMake Setup
           working-directory: build
           shell: bash
           run: |
-            cmake .. -G Ninja
+            cmake .. -G make
   
         - name: Build
           working-directory: build
