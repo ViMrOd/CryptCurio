@@ -2,6 +2,8 @@
 
 cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
 
+project(Big_Number)
+
 # exe_file
 add_executable(exe_file)
 target_sources(exe_file PRIVATE main.c bn.c)
