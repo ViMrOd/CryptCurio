@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 
         fprintf(stdout, "Result of ADD Sum Test = %s\n", bn_string(A));
         fprintf(stdout, "Result of AA Size Test = %zd\n", get_size(A));
-        fprintf(stdout, "Addition Tests Passed\n");
+        fprintf(stdout, "Addition Tests Completed\n");
     }
 
     {
@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 
         fprintf(stdout, "Result of SUB Diff Test = %s\n", bn_string(A));
         fprintf(stdout, "Result of SUBn Size Test = %zd\n", get_size(A));
-        fprintf(stdout, "Subtraction Tests Passed\n");
+        fprintf(stdout, "Subtraction Tests Completed\n");
     }
 
     {
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
         int cmp = bn_cmp(A, B);
 
         fprintf(stdout, "Result of CMP Test = %d\n", cmp);
-        fprintf(stdout, "Comparision Tests Passed\n");
+        fprintf(stdout, "Comparision Tests Completed\n");
     }
 
     {
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
         int cmp = bn_cmp_abs(A, B);
 
         fprintf(stdout, "Result of CMP ABS Test = %d\n", cmp);
-        fprintf(stdout, "Comparision ABS Tests Passed\n");
+        fprintf(stdout, "Comparision ABS Tests Completed\n");
     }
     
     {
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 
         fprintf(stdout, "Result of MUL Product Test = %s\n", bn_string(A));
         fprintf(stdout, "Result of MUL Size Test = %zd\n", get_size(A));
-        fprintf(stdout, "Multiplication Tests Passed\n");
+        fprintf(stdout, "Multiplication Tests Completed\n");
     }
 
     {
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
         fprintf(stdout, "Result of DIV Quotient Size Test = %zd\n", get_size(A));
         fprintf(stdout, "Result of DIV Remainder Test = %s\n", bn_string(B));
         fprintf(stdout, "Result of DIV Remainder Size Test = %zd\n", get_size(B));
-        fprintf(stdout, "Division Tests Passed\n");
+        fprintf(stdout, "Division Tests Completed\n");
     }
 
     {
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 
         fprintf(stdout, "Result of POWM Test = %s\n", bn_string(A));
         fprintf(stdout, "Result of POWM Size Test = %zd\n", get_size(A));
-        fprintf(stdout, "POWM Tests Passed\n");
+        fprintf(stdout, "POWM Tests Completed\n");
 
     }
 
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 
         fprintf(stdout, "Result of POWM Test = %s\n", bn_string(A));
         fprintf(stdout, "Result of POWM Size Test = %zd\n", get_size(A));
-        fprintf(stdout, "POWM Tests Passed\n");
+        fprintf(stdout, "POWM Tests Completed\n");
 
     }
 
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 
         fprintf(stdout, "Result of MOD Test = %s\n", bn_string(A));
         fprintf(stdout, "Result of MOD Size Test = %zd\n", get_size(A));
-        fprintf(stdout, "MOD Tests Passed\n");
+        fprintf(stdout, "MOD Tests Completed\n");
 
     }
 
