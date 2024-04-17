@@ -9,3 +9,7 @@ target_sources(exe_file PRIVATE main.c bn.c)
 # Enable -O3 optimization and check all warnings
 target_compile_options(exe_file PRIVATE -O3 -Wall)
 
+# testing
+include(CTest)
+add_subdirectory(testsuite)
+
