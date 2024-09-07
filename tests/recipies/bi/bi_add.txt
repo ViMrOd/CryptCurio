@@ -1,6 +1,3 @@
-# These tests are taken directly from OpenSSL's bnsum.txt
-# If these tests are good enough for OpenSSL, there are good enough for CryptCurio
-
 # Sum tests.
 #
 # These test vectors satisfy A + B = Sum.
