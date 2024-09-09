@@ -1,6 +1,7 @@
 
 #include "bi.h"
 #include <assert.h>
+#include <stdio.h>
 
 int BI_add(BIGINT *ret, const BIGINT *a, const BIGINT *b)
 {
@@ -70,7 +71,6 @@ int BI_uadd(BIGINT *ret, const BIGINT *a, const BIGINT *b)
         b = tmp;
     }
 
-    WORD *rd = ret->dig;
     const WORD *ad = a->dig;
     const WORD *bd = b->dig;
 
@@ -78,7 +78,8 @@ int BI_uadd(BIGINT *ret, const BIGINT *a, const BIGINT *b)
     int min = b->size;
     int diff = max - min;
 
-    /* ret->cap := max + 1 */
+    ret = bi_expand(ret, max + 1);
+    WORD *rd = ret->dig;
     ret->size = max;
 
     WORD carry = bi_add_words(rd, ad, bd, min);
@@ -96,6 +97,8 @@ int BI_uadd(BIGINT *ret, const BIGINT *a, const BIGINT *b)
     rd[0] = carry;
     ret->size += carry;
 
+    BI_correct_top(ret);
+
     return 1;
 }
 
@@ -106,7 +109,6 @@ int BI_uadd(BIGINT *ret, const BIGINT *a, const BIGINT *b)
  */
 int BI_usub(BIGINT *ret, const BIGINT *a, const BIGINT *b)
 {
-    WORD *rd = ret->dig;
     const WORD *ad = a->dig;
     const WORD *bd = b->dig;
 
@@ -117,6 +119,8 @@ int BI_usub(BIGINT *ret, const BIGINT *a, const BIGINT *b)
 
     assert(diff >= 0 && "|a| < |b|");
 
+    ret = bi_expand(ret, max);
+    WORD *rd = ret->dig;
     ret->size = max;
 
     WORD borrow = bi_sub_words(rd, ad, bd, min);

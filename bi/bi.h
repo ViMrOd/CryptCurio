@@ -115,9 +115,10 @@ void BI_free(BIGINT *b);
 void BI_copy(BIGINT *ret, const BIGINT *a);
 
 BIGINT* bi_expand(BIGINT *b, const int w);
+void BI_correct_top(BIGINT *b);
 
-void hex2bi(BIGINT *b, const char *s);
-char* bn2hex(const BIGINT *b);
+int hex_to_bi(BIGINT *b, const char *s);
+char* bi_to_hex(const BIGINT *b);
 
 int BI_add(BIGINT *ret, const BIGINT *a, const BIGINT *b);
 int BI_sub(BIGINT *ret, const BIGINT *a, const BIGINT *b);

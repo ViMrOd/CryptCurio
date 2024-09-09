@@ -36,6 +36,7 @@ void BI_copy(BIGINT *ret, const BIGINT *a)
     //clear ret->dig and copy a->dig to ret->dig
 }
 
+//Bug in this function
 int BI_is_zero(const BIGINT *b)
 {
     return b->dig[0] == 0 && (b->size == 0);
@@ -45,10 +46,27 @@ BIGINT* bi_expand(BIGINT *b, const int w)
 {
     if (b->cap >= w)
         return b;
-    b->dig = realloc(b->dig, w * sizeof(*b->dig));
-    if (b->dig == NULL)
+    WORD *a = malloc(w * sizeof(*a));
+    if (!a)
         return NULL;
+    if (b->size > 0)
+        memcpy(a, b->dig, b->size * sizeof(*a));
+    if (b->dig != NULL)
+        free(b->dig);
+    b->dig = a;
+    b->cap = w;
     return b;
+}
+
+void BI_correct_top(BIGINT *b)
+{
+    int z = 0;
+    for (int i = b->size - 1; i >= 0; i--) {
+        if (b->dig[i] != 0)
+            break;
+        z++;
+    }
+    b->size -= z;
 }
 
 void BI_zero(BIGINT *a)
