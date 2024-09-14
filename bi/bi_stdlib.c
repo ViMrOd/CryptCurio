@@ -1,3 +1,20 @@
+/*
+ * CryptCurio 
+ * Copyright (C) 2024 ViMrOd
+
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
 #include "bi.h"
 #include <stdlib.h>
@@ -28,18 +45,23 @@ void BI_free(BIGINT *b)
     b = NULL;
 }
 
-void BI_copy(BIGINT *ret, const BIGINT *a)
+int BI_copy(BIGINT *ret, const BIGINT *b)
 {
-    ret->size = a->size;
-    ret->cap = a->cap;
-    ret->sign = a->sign;
-    //clear ret->dig and copy a->dig to ret->dig
+    WORD *a = malloc(b->cap * sizeof(*a));
+    if (!a)
+        return 0;
+    memcpy(a, b->dig, b->size * sizeof(*a));
+    free(ret->dig);
+    ret->dig = a;
+    ret->size = b->size;
+    ret->cap = b->cap;
+    ret->sign = b->sign;
+    return 1;
 }
 
-//Bug in this function
 int BI_is_zero(const BIGINT *b)
 {
-    return b->dig[0] == 0 && (b->size == 0);
+    return b->sign == 0 && (b->size == 0);
 }
 
 BIGINT* bi_expand(BIGINT *b, const int w)
@@ -49,10 +71,8 @@ BIGINT* bi_expand(BIGINT *b, const int w)
     WORD *a = malloc(w * sizeof(*a));
     if (!a)
         return NULL;
-    if (b->size > 0)
-        memcpy(a, b->dig, b->size * sizeof(*a));
-    if (b->dig != NULL)
-        free(b->dig);
+    memcpy(a, b->dig, b->size * sizeof(*a));
+    free(b->dig);
     b->dig = a;
     b->cap = w;
     return b;

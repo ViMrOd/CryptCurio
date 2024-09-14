@@ -1,8 +1,19 @@
 /*
- *
- *
- *
- *
+ * CryptCurio 
+ * Copyright (C) 2024 ViMrOd
+
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef BI_H
@@ -112,7 +123,7 @@ WORD bi_mul_add_words(WORD *rop, const WORD *a, int n, WORD b);
 
 BIGINT* BI_new(void);
 void BI_free(BIGINT *b);
-void BI_copy(BIGINT *ret, const BIGINT *a);
+int BI_copy(BIGINT *ret, const BIGINT *a);
 
 BIGINT* bi_expand(BIGINT *b, const int w);
 void BI_correct_top(BIGINT *b);
@@ -128,6 +139,7 @@ int BI_usub(BIGINT*, const BIGINT*, const BIGINT*);
 void bi_mul(WORD *ret, const WORD *a, int na, const WORD *b, int nb);
 int BI_mul(BIGINT *ret, const BIGINT *a, const BIGINT *b);
 
+int BI_cmp(const BIGINT *a, const BIGINT *b);
 int BI_ucmp(const BIGINT *a, const BIGINT *b);
 
 int BI_is_zero(const BIGINT*);

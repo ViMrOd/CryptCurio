@@ -1,9 +1,26 @@
+# CryptCurio 
+# Copyright (C) 2024 ViMrOd
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 # These tests are taken directly from OpenSSL's bnsum.txt
 # If these tests are good enough for OpenSSL, there are good enough for CryptCurio
 
 # Sum tests.
 #
 # These test vectors satisfy A + B = Sum.
+
 
 Sum = 0
 A = 0

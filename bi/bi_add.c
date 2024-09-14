@@ -1,3 +1,20 @@
+/*
+ * CryptCurio 
+ * Copyright (C) 2024 ViMrOd
+
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
 #include "bi.h"
 #include <assert.h>
@@ -69,18 +86,20 @@ int BI_uadd(BIGINT *ret, const BIGINT *a, const BIGINT *b)
         tmp = a;
         a = b;
         b = tmp;
-    }
-
-    const WORD *ad = a->dig;
-    const WORD *bd = b->dig;
+    } 
 
     int max = a->size;
     int min = b->size;
     int diff = max - min;
 
-    ret = bi_expand(ret, max + 1);
-    WORD *rd = ret->dig;
+    if (bi_expand(ret, max + 1) == NULL)
+        return 0;
+
     ret->size = max;
+
+    const WORD *ad = a->dig;
+    const WORD *bd = b->dig;
+    WORD *rd = ret->dig;
 
     WORD carry = bi_add_words(rd, ad, bd, min);
     ad += min;
@@ -93,11 +112,12 @@ int BI_uadd(BIGINT *ret, const BIGINT *a, const BIGINT *b)
         ++ad;
         ++rd;
     }
-
     rd[0] = carry;
     ret->size += carry;
 
-    BI_correct_top(ret);
+    //BI_correct_top(ret);
+    while (ret->size && (--rd)[0] == 0)
+        --ret->size;
 
     return 1;
 }
@@ -109,9 +129,6 @@ int BI_uadd(BIGINT *ret, const BIGINT *a, const BIGINT *b)
  */
 int BI_usub(BIGINT *ret, const BIGINT *a, const BIGINT *b)
 {
-    const WORD *ad = a->dig;
-    const WORD *bd = b->dig;
-
     /* No swap here like BI_uadd as the caller must ensure that |a| >= |b| */
     int max = a->size;
     int min = b->size;
@@ -119,9 +136,14 @@ int BI_usub(BIGINT *ret, const BIGINT *a, const BIGINT *b)
 
     assert(diff >= 0 && "|a| < |b|");
 
-    ret = bi_expand(ret, max);
-    WORD *rd = ret->dig;
+    if(bi_expand(ret, max) == NULL)
+        return 0;
+
     ret->size = max;
+
+    const WORD *ad = a->dig;
+    const WORD *bd = b->dig;
+    WORD *rd = ret->dig;
 
     WORD borrow = bi_sub_words(rd, ad, bd, min);
     ad += min;
@@ -135,7 +157,7 @@ int BI_usub(BIGINT *ret, const BIGINT *a, const BIGINT *b)
         ++rd;
     }    
 
-    while (ret->size && (--rd[0]) == 0)
+    while (ret->size && (--rd)[0] == 0)
         --ret->size;
 
     ret->sign = 0;
