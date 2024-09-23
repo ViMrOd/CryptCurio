@@ -17,15 +17,16 @@
 CC ?= gcc
 FLAGS = -Wall -Wextra -pedantic -std=c89 -O3
 
-OBJECTS = bi_sum_test.o bi_add.o bi_asm.o bi_cmp.o bi_conv.o bi_stdlib.o bi_mul.o 
+OBJECTS = bi_test.o bi_add.o bi_asm.o bi_cmp.o bi_conv.o bi_div.o bi_exp.o bi_mod.o bi_mul.o bi_shift.o bi_stdlib.o
 
-run : tests
-	./tests
+run : test
+	./test
 
-tests : $(OBJECTS)
-	CC $(FLAGS) -o tests $(OBJECTS)
+test : $(OBJECTS)
+	CC $(FLAGS) -o test $(OBJECTS)
 
-bi_sum_test.o :
+bi_test.o : bi_test.c
+	CC -c bi_test.c
 
 bi_add.o : ../bi/bi.h ../bi/bi_add.c
 	CC -c ../bi/bi_add.c
@@ -35,10 +36,18 @@ bi_conv.o : ../bi/bi.h ../bi/bi_conv.c
 	CC -c ../bi/bi_conv.c
 bi_cmp.o : ../bi/bi.h ../bi/bi_cmp.c
 	CC -c ../bi/bi_cmp.c
-bi_stdlib.o : ../bi/bi.h ../bi/bi_stdlib.c
-	CC -c ../bi/bi_stdlib.c
+bi_div.o : ../bi/bi.h ../bi/bi_div.c
+	CC -c ../bi/bi_div.c
+bi_exp.o : ../bi/bi.h ../bi/bi_exp.c
+	CC -c ../bi/bi_exp.c
+bi_mod.o : ../bi/bi.h ../bi/bi_mod.c
+	CC -c ../bi/bi_mod.c
 bi_mul.o : ../bi/bi.h ../bi/bi_mul.c
 	CC -c ../bi/bi_mul.c
+bi_shift.o : ../bi/bi.h ../bi/bi_shift.c
+	CC -c ../bi/bi_shift.c
+bi_stdlib.o : ../bi/bi.h ../bi/bi_stdlib.c
+	CC -c ../bi/bi_stdlib.c
 
 clean :
-	rm tests $(OBJECTS)
+	rm test $(OBJECTS)

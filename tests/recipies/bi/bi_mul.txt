@@ -14,10 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# These tests are taken directly from OpenSSL's bnmul.txt
-# If these tests are good enough for OpenSSL, there are good enough for CryptCurio
-
 # These test vectors satisfy A * B = Product.
+
+# This file uses test vectors from the OpenSSL project, which is licensed under
+# the Apache License 2.0.
+# For more information, visit: https://www.openssl.org/
+# The Apache License 2.0 can be found at: https://www.apache.org/licenses/LICENSE-2.0
 
 
 Product = 5befab3320f8f90542f3120235abd926aac3805a19e343f690

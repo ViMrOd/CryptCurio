@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# These tests are taken directly from OpenSSL's bnsum.txt
-# If these tests are good enough for OpenSSL, there are good enough for CryptCurio
-
-# Sum tests.
-#
 # These test vectors satisfy A + B = Sum.
+
+# This file uses test vectors from the OpenSSL project, which is licensed under
+# the Apache License 2.0.
+# For more information, visit: https://www.openssl.org/
+# The Apache License 2.0 can be found at: https://www.apache.org/licenses/LICENSE-2.0
 
 
 Sum = 0
