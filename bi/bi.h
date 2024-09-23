@@ -136,13 +136,31 @@ int BI_sub(BIGINT *ret, const BIGINT *a, const BIGINT *b);
 int BI_uadd(BIGINT*, const BIGINT*, const BIGINT*);
 int BI_usub(BIGINT*, const BIGINT*, const BIGINT*);
 
+#define BI_sqr(__r, __a) BI_mul((__r), (__a), (__a))
 void bi_mul(WORD *ret, const WORD *a, int na, const WORD *b, int nb);
 int BI_mul(BIGINT *ret, const BIGINT *a, const BIGINT *b);
+
+#define BI_rem(__r, __a, __m) BI_div(0, (__r), (__a), (__m))
+int BI_modmul(BIGINT *ret, const BIGINT *a, const BIGINT *b, const BIGINT *m);
+
+int BI_div(BIGINT *q, BIGINT *r, const BIGINT *a, const BIGINT *b);
+int BI_mod(BIGINT *m, const BIGINT *a, const BIGINT *b);
+
+int BI_pow(BIGINT *r, const BIGINT *a, const BIGINT *b);
+int BI_modpow(BIGINT *r, const BIGINT *a, const BIGINT *b, const BIGINT *m);
+
+int BI_lshift1(BIGINT *r, const BIGINT *a);
+int BI_rshift1(BIGINT *r, const BIGINT *a);
+int BI_lshift(BIGINT *r, const BIGINT *a, int n);
+int BI_rshift(BIGINT *r, const BIGINT *a, int n);
 
 int BI_cmp(const BIGINT *a, const BIGINT *b);
 int BI_ucmp(const BIGINT *a, const BIGINT *b);
 
 int BI_is_zero(const BIGINT*);
 void BI_zero(BIGINT *a);
+
+int BI_num_bits(const BIGINT *b);
+WORD BI_is_bit_set(const BIGINT *b, int n);
 
 #endif /* BI_H */

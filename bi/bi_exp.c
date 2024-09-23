@@ -16,41 +16,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <assert.h>
-
 #include "bi.h"
 
-int BI_cmp(const BIGINT *a, const BIGINT *b)
+int BI_pow(BIGINT *r, const BIGINT *a, const BIGINT *b)
 {
-    if (a->sign != b->sign) {
-        if (a->sign > b->sign) { //1 0
-            return -1;
-        } else {
-            assert(b->sign > a->sign); //0 1
-            return 1;
+    int t = 0, free_r = 0;
+
+    BIGINT *ret;
+    if (r == a || r == b) {
+        ret = BI_new();
+        free_r = 1;
+        if (!ret)
+            goto end;
+    } else {
+        ret = r;
+    }
+
+    hex_to_bi(ret, "1");
+
+    int n = BI_num_bits(b);
+    for (int i = n - 1; i >= 0; i--) {
+        if (!BI_sqr(ret, ret))
+            goto end;
+        if (BI_is_bit_set(b, i)) {
+            if (BI_mul(ret, ret, a) == 0)
+                goto end;
         }
     }
-    else if (a->sign == 1) { //1 1
-        assert(b->sign == 1);
-        return BI_ucmp(b, a);
-    } else {
-        assert(a->sign == 0 && b->sign == 0); //0 0
-        return BI_ucmp(a, b);
-    }
-}
+    BI_copy(r, ret);
+    BI_correct_top(r);
 
-int BI_ucmp(const BIGINT *a, const BIGINT *b)
-{
-    int i;
-
-    i = a->size - b->size;
-    if (i != 0)
-        return i;
-
-    for (i = a->size - 1; i >= 0; i--) {
-        if (a->dig[i] != b->dig[i])
-            return a->dig[i] > b->dig[i] ? 1 : -1;
-    }
-
-    return 0;
+    t = 1;
+end:
+    if (free_r == 1)
+        BI_free(ret);
+    return t;
 }

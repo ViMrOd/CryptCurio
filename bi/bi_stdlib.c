@@ -19,6 +19,7 @@
 #include "bi.h"
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 BIGINT* BI_new(void)
 {
@@ -39,6 +40,8 @@ BIGINT* BI_new(void)
 
 void BI_free(BIGINT *b)
 {
+    if (b == NULL)
+        return;
     free(b->dig);
     b->dig = NULL;
     free(b);
@@ -47,6 +50,9 @@ void BI_free(BIGINT *b)
 
 int BI_copy(BIGINT *ret, const BIGINT *b)
 {
+    if (ret == b)
+        return 1;
+
     WORD *a = malloc(b->cap * sizeof(*a));
     if (!a)
         return 0;
@@ -56,6 +62,7 @@ int BI_copy(BIGINT *ret, const BIGINT *b)
     ret->size = b->size;
     ret->cap = b->cap;
     ret->sign = b->sign;
+
     return 1;
 }
 
@@ -93,4 +100,27 @@ void BI_zero(BIGINT *a)
 {
     a->sign = 0;
     a->size = 0;
+}
+
+int BI_num_bits(const BIGINT *b)
+{
+    if (BI_is_zero(b))
+        return 0;
+    WORD w = b->dig[b->size - 1];
+    int c = 0;
+    while (w > 0) {
+        ++c;
+        w >>= 1;
+    }
+    return c + (b->size - 1) * word_size;
+}
+
+WORD BI_is_bit_set(const BIGINT *b, int n)
+{
+    assert(n >= 0 || n < BI_num_bits(b));
+
+    int index = n / word_size;
+    int sub_index = n % word_size;
+    WORD mask = (WORD)1 << sub_index;
+    return b->dig[index] & mask;
 }

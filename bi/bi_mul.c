@@ -20,9 +20,16 @@
 
 int BI_mul(BIGINT *ret, const BIGINT *a, const BIGINT *b)
 {
+    if (BI_is_zero(a) || BI_is_zero(b)) {
+        BI_zero(ret);
+        return 1;
+    }
+
     int na = a->size;
     int nb = b->size;
     int nr = na + nb;
+
+    int clean = 0;
 
     BIGINT *r;
 
@@ -31,18 +38,23 @@ int BI_mul(BIGINT *ret, const BIGINT *a, const BIGINT *b)
      * and subtraction requires going back to previous limbs in a and b so 
      * those must be saved 
      */
-    if (ret == a || ret == b)
+    if (ret == a || ret == b) {
         r = BI_new();
-    else
+        clean = 1;
+    } else {
         r = ret;
+    }
 
-    r->sign = a->sign ^ b->sign;
     r = bi_expand(r, nr);
+    if (!r)
+        return 0;
+    r->sign = a->sign ^ b->sign;
     r->size = nr;
     bi_mul(r->dig, a->dig, na, b->dig, nb);
 
     BI_copy(ret, r);
-    //BI_free(r); Interesting a segfault occurs here
+    if (clean == 1)
+        BI_free(r);
     BI_correct_top(ret);
 
     return 1;

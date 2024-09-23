@@ -31,11 +31,11 @@ int BI_add(BIGINT *ret, const BIGINT *a, const BIGINT *b)
         cmp = BI_ucmp(a, b);
 
         if (cmp > 0) {
-            r = BI_usub(ret, a, b);
             neg = a->sign;
+            r = BI_usub(ret, a, b); 
         } else if (cmp < 0) {
-            r = BI_usub(ret, b, a);
             neg = b->sign;
+            r = BI_usub(ret, b, a);
         }
         else {
             neg = 0;
@@ -115,9 +115,10 @@ int BI_uadd(BIGINT *ret, const BIGINT *a, const BIGINT *b)
     rd[0] = carry;
     ret->size += carry;
 
-    //BI_correct_top(ret);
-    while (ret->size && (--rd)[0] == 0)
-        --ret->size;
+    //assert(ret->dig[ret->size - 1] != 0);
+    BI_correct_top(ret);
+    //while (ret->size && (--rd)[0] == 0)
+        //--ret->size;
 
     return 1;
 }
