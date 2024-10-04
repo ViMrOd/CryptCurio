@@ -115,10 +115,7 @@ int BI_uadd(BIGINT *ret, const BIGINT *a, const BIGINT *b)
     rd[0] = carry;
     ret->size += carry;
 
-    //assert(ret->dig[ret->size - 1] != 0);
-    BI_correct_top(ret);
-    //while (ret->size && (--rd)[0] == 0)
-        //--ret->size;
+    //BI_correct_top(ret);
 
     return 1;
 }

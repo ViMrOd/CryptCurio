@@ -21,7 +21,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "../bi/bi.h"
+#include "bi.h"
 
 int get_bi(BIGINT *b, const char *op, const char *line)
 {
@@ -31,7 +31,7 @@ int get_bi(BIGINT *b, const char *op, const char *line)
     l[strlen(l) - 1] = '\0'; /* Strip newline char */
     hex_to_bi(b, l);
     if(strcmp(bi_to_hex(b), l) != 0) {
-        printf("%s\n", l);
+        printf("%s\n%s\n", l, bi_to_hex(b));
         return 0;
     }
     return 1;
@@ -582,6 +582,7 @@ int file_test_exp(void)
                 goto cleanup;
             if (BI_cmp(Res, Exp))
                 goto cleanup;
+
             continue;
         }
         ERR("Unexpected line in file");

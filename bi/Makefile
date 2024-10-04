@@ -15,22 +15,26 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 CC ?= gcc
-FLAGS = -Wall -Wextra -Wpedantic -O3
-INCLUDE = -I../bi
-LIB_PATH = -L../bi
-LIB = -lbi
+CFLAGS = -Wall -Wextra -Wpedantic -O3
 
-.PHONY :  all help clean
+# Automatically generate the list of object files from the source files
+SOURCES = $(wildcard *.c)
+OBJECTS = $(SOURCES:.c=.o)
 
-all : bi_test
+.PHONY: all help clean
 
-help :
-	@echo "Availiable Options"
-	@echo "  bi_test - Build BIGINT tests"
-	@echo "  clean   - Clean BIGINT test object files"
+all: libbi.a
 
-bi_test : bi_test.c
-	CC $(FLAGS) $< $(LIB_PATH) $(LIB) $(INCLUDE) -o $@
+help:
+	@echo "Available targets:"
+	@echo "  all   - Build Static BIGINT Library"
+	@echo "  clean - Clean object files"
 
-clean :
-	rm bi_test
+libbi.a: $(OBJECTS)
+	ar rcs $@ $^
+
+%.o: %.c bi.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+clean:
+	rm -f $(OBJECTS) libbi.a

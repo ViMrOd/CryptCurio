@@ -1,4 +1,7 @@
 version1/
 
 *.o
-tests/tests
+*.a
+
+*[^.]*
+!LICENSE

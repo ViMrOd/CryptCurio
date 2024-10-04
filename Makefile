@@ -12,25 +12,23 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>
 
-CC ?= gcc
-FLAGS = -Wall -Wextra -Wpedantic -O3
-INCLUDE = -I../bi
-LIB_PATH = -L../bi
-LIB = -lbi
+.PHONY : all build tests clean
 
-.PHONY :  all help clean
+all : build
 
-all : bi_test
+build :
+	$(MAKE) -C bi
 
-help :
-	@echo "Availiable Options"
-	@echo "  bi_test - Build BIGINT tests"
-	@echo "  clean   - Clean BIGINT test object files"
-
-bi_test : bi_test.c
-	CC $(FLAGS) $< $(LIB_PATH) $(LIB) $(INCLUDE) -o $@
+tests :
+	$(MAKE) -C tests
+	cd tests && ./bi_test
 
 clean :
-	rm bi_test
+	$(MAKE) -C bi clean
+	$(MAKE) -C tests clean
+
+
+
+

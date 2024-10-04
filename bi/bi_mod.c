@@ -61,9 +61,8 @@ int BI_modpow(BIGINT *r, const BIGINT *a, const BIGINT *b, const BIGINT *m)
 
     int n = BI_num_bits(b);
     for (int i = n - 1; i >= 0; i--) {
-        if (BI_sqr(ret, ret) == 0)
+        if (BI_sqr(ret, ret) == 0 || BI_mod(ret, ret, m) == 0)
             goto end;
-        BI_mod(ret, ret, m);
         if (BI_is_bit_set(b, i)) {
             if (!BI_modmul(ret, ret, a, m))
                 goto end;

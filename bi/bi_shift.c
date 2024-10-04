@@ -17,7 +17,6 @@
  */
 
 #include <string.h>
-#include <stdio.h>
 
 #include "bi.h"
 
@@ -41,7 +40,7 @@ int BI_lshift1(BIGINT *r, const BIGINT *a)
     }
     rd[0] = carry;
     r->size += carry;
-    BI_correct_top(r);
+    //BI_correct_top(r);
     return 1;
 }
 

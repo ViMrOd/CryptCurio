@@ -20,14 +20,14 @@
 
 int BI_mul(BIGINT *ret, const BIGINT *a, const BIGINT *b)
 {
-    if (BI_is_zero(a) || BI_is_zero(b)) {
-        BI_zero(ret);
-        return 1;
-    }
-
     int na = a->size;
     int nb = b->size;
     int nr = na + nb;
+
+    if (na == 0 || nb == 0) {
+        BI_zero(ret);
+        return 1;
+    }
 
     int clean = 0;
 

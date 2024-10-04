@@ -163,4 +163,7 @@ void BI_zero(BIGINT *a);
 int BI_num_bits(const BIGINT *b);
 WORD BI_is_bit_set(const BIGINT *b, int n);
 
+int BI_rand(BIGINT *r, int bits, int exact, int bottom);
+int BI_rand_range(BIGINT *r, const BIGINT *rng, int exact, int bottom);
+
 #endif /* BI_H */

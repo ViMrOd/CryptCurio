@@ -12,25 +12,28 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 CC ?= gcc
-FLAGS = -Wall -Wextra -Wpedantic -O3
-INCLUDE = -I../bi
-LIB_PATH = -L../bi
+FLAGS = -O2 -Wall -Wextra -Wpedantic
+LIB_PATH = -L../../bi
+INC_PATH = -I../../bi
 LIB = -lbi
 
-.PHONY :  all help clean
+SRC = $(wildcard *.c)
+EXE = $(basename $(SRC))
 
-all : bi_test
+.PHONY : all help clean
+
+all : $(EXE)
 
 help :
-	@echo "Availiable Options"
-	@echo "  bi_test - Build BIGINT tests"
-	@echo "  clean   - Clean BIGINT test object files"
+	@echo "miller_rabin - Build Miller Rabin Demo"
+	@echo "factorial    - Build Factorial Demo"
+	@echo "clean        - Remove Executables"
 
-bi_test : bi_test.c
-	CC $(FLAGS) $< $(LIB_PATH) $(LIB) $(INCLUDE) -o $@
+% : %.c
+	CC $< -o $@ $(FLAGS) $(LIB_PATH) $(LIB) $(INC_PATH)
 
 clean :
-	rm bi_test
+	rm $(EXE)

@@ -19,7 +19,6 @@
 #include "bi.h"
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
 BIGINT* BI_new(void)
 {
@@ -117,7 +116,8 @@ int BI_num_bits(const BIGINT *b)
 
 WORD BI_is_bit_set(const BIGINT *b, int n)
 {
-    assert(n >= 0 || n < BI_num_bits(b));
+    if (n < 0 || n >= BI_num_bits(b))
+        return 0;
 
     int index = n / word_size;
     int sub_index = n % word_size;
